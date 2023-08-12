@@ -20,18 +20,20 @@ namespace MyCompanyApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //!!! middleware registration order (is very important) !!! 
+
+            // In development process we need to get detailed informatio about errors
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            
             app.UseRouting();
 
+            // Application static files support connection(css, js, etc.)
+            app.UseStaticFiles();
+
+            // register routes we need (endpoints)
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello world!");
-                });
+                endpoints.MapControllerRoute("default", "{controller = Home}/{action=Index}/{id?}");
             });
         }
     }
