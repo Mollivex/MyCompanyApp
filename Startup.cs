@@ -20,7 +20,7 @@ namespace MyCompanyApp
     {
         public IConfigurationRoot Configuration { get; }
         public Startup(IConfiguration configuration) => Configuration = (IConfigurationRoot)configuration;
-        public void ConfigureServices(IServiceCollection services, IServiceItemsRepository serviceItemsRepository)
+        public void ConfigureServices(IServiceCollection services)
         {
             // Config.cs connecting from appsettings.json
             Configuration.Bind("Project", new Config());
@@ -65,8 +65,9 @@ namespace MyCompanyApp
         {
             //!!! middleware registration order (is very important) !!! 
 
-            // In development process we need to get detailed informatio about errors
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            // In development process we need to get detailed information about errors
+            if (env.IsDevelopment()) 
+                app.UseDeveloperExceptionPage();
 
             // Application static files support connection(css, js, etc.)
             app.UseStaticFiles();
