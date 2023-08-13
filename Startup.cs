@@ -9,7 +9,7 @@ namespace MyCompanyApp
 {
     public class Startup
     {
-        public void ConfigurationServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             //add controllers and views support (MVC)
             services.AddControllersWithViews()
@@ -33,7 +33,7 @@ namespace MyCompanyApp
             // register routes we need (endpoints)
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller = Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
