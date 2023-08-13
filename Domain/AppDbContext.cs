@@ -43,8 +43,8 @@ namespace MyCompanyApp.Domain
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
-                RoleId = "c8aa7a12-8be2-46c7-96fa-f1cb994f94d8",
-                UserId = "0a7898f3-fb47-449a-8e74-917cff961c27"
+                RoleId = "077f2d17-0151-4a4e-b2d5-6a74b4d05127",
+                UserId = "169e00d8-226e-447e-b32b-386471434c56"
             });
 
             modelBuilder.Entity<TextField>().HasData(new TextField
