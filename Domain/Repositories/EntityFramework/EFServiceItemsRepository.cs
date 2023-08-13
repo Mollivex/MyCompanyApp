@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyCompanyApp.Domain.Entities;
+using MyCompanyApp.Domain.Repositories.Abstract;
 using System;
 using System.Linq;
 
 namespace MyCompanyApp.Domain.Repositories.EntityFramework
 {
-    public class EFServiceItemsRepository
+    public class EFServiceItemsRepository : IServiceItemsRepository
     {
         private readonly AppDbContext context;
         public EFServiceItemsRepository(AppDbContext context)

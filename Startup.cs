@@ -2,10 +2,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyCompanyApp.Domain;
+using MyCompanyApp.Domain.Repositories.Abstract;
+using MyCompanyApp.Domain.Repositories.EntityFramework;
 using MyCompanyApp.Service;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace MyCompanyApp
 {
@@ -13,14 +20,43 @@ namespace MyCompanyApp
     {
         public IConfigurationRoot Configuration { get; }
         public Startup(IConfiguration configuration) => Configuration = (IConfigurationRoot)configuration;
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IServiceItemsRepository serviceItemsRepository)
         {
             // Config.cs connecting from appsettings.json
             Configuration.Bind("Project", new Config());
 
-            //add controllers and views support (MVC)
+            // Connect app functionality we need as services
+            services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>();
+            services.AddTransient<IServiceItemsRepository, EFServiceItemsRepository>();
+            services.AddTransient<DataManager>();
+
+            // Connect database context
+            services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
+
+            // Set up identity system
+            services.AddIdentity<IdentityUser, IdentityRole>(opts =>
+            {
+                opts.User.RequireUniqueEmail = true;
+                opts.Password.RequiredLength = 6;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireLowercase = false;
+                opts.Password.RequireUppercase = false;
+                opts.Password.RequireDigit = false;
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+            // Set up authentication cookie
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = "myCompanyAuth";
+                options.Cookie.HttpOnly = true;
+                options.LoginPath = "/account/login";
+                options.AccessDeniedPath = "/account/accessdenied";
+                options.SlidingExpiration = true;
+            });
+
+            // Add controllers and views support (MVC)
             services.AddControllersWithViews()
-                // use compatibility with ASP.NET Core 3.0
+                // Use compatibility with ASP.NET Core 3.0
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
         }
 
@@ -31,13 +67,19 @@ namespace MyCompanyApp
 
             // In development process we need to get detailed informatio about errors
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-            
-            app.UseRouting();
 
             // Application static files support connection(css, js, etc.)
             app.UseStaticFiles();
 
-            // register routes we need (endpoints)
+            // Connect routing system
+            app.UseRouting();
+
+            // Connect authentication and authorization
+            app.UseCookiePolicy();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            // Register routes we need (endpoints)
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");

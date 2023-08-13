@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyCompanyApp.Domain.Entities;
+using MyCompanyApp.Domain.Repositories.Abstract;
 using System;
 using System.Linq;
 
 
 namespace MyCompanyApp.Domain.Repositories.EntityFramework
 {
-    public class EFTextFieldsRepository
+    public class EFTextFieldsRepository : ITextFieldsRepository
     {
         private readonly AppDbContext context;
         public EFTextFieldsRepository(AppDbContext context)
