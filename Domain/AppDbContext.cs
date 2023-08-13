@@ -24,27 +24,49 @@ namespace MyCompanyApp.Domain
 
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
             {
-                Id = "8asdf1818-b019-j184-f48h3h32e3qd2",
+                Id = "077f2d17-0151-4a4e-b2d5-6a74b4d05127",
                 Name = "admin",
                 NormalizedName = "ADMIN"
             });
 
             modelBuilder.Entity<IdentityUser>().HasData(new IdentityUser
             {
-                Id = "8as4f1148-g029-je92-f401ow3us6e3qd2",
+                Id = "169e00d8-226e-447e-b32b-386471434c56",
                 UserName = "admin",
                 NormalizedUserName = "ADMIN",
                 Email = "my@email.com",
                 NormalizedEmail = "MY@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "superpassword"),
-                SecurityStamp = string.Empty,
-
-                
-
+                SecurityStamp = string.Empty
             });
-            
-        }
 
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = "c8aa7a12-8be2-46c7-96fa-f1cb994f94d8",
+                UserId = "0a7898f3-fb47-449a-8e74-917cff961c27"
+            });
+
+            modelBuilder.Entity<TextField>().HasData(new TextField
+            {
+                Id = new Guid("e8a35e6e-2ec6-472d-b09d-7861c02daab1"),
+                CodeWord = "PageIndex",
+                Title = "Main page"
+            });
+
+            modelBuilder.Entity<TextField>().HasData(new TextField
+            {
+                Id = new Guid("15627982-3663-481d-9ba1-a91757b92bd3"),
+                CodeWord = "PageServices",
+                Title = "Our Services"
+            });
+
+            modelBuilder.Entity<TextField>().HasData(new TextField
+            {
+                Id = new Guid("1a9012e6-a71f-4faa-ae8a-34ecf1e2f14d"),
+                CodeWord = "PageContacts",
+                Title = "Contacts"
+            });
+        }
     }
 }
