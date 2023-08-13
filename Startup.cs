@@ -2,15 +2,22 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyCompanyApp.Service;
 
 namespace MyCompanyApp
 {
     public class Startup
     {
+        public IConfigurationRoot Configuration { get; }
+        public Startup(IConfiguration configuration) => Configuration = (IConfigurationRoot)configuration;
         public void ConfigureServices(IServiceCollection services)
         {
+            // Config.cs connecting from appsettings.json
+            Configuration.Bind("Project", new Config());
+
             //add controllers and views support (MVC)
             services.AddControllersWithViews()
                 // use compatibility with ASP.NET Core 3.0
