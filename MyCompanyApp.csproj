@@ -14,7 +14,6 @@
     <Folder Include="Areas\Admin\Views\" />
     <Folder Include="Domain\" />
     <Folder Include="Models\ViewComponents\" />
-    <Folder Include="Service\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
