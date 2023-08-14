@@ -54,8 +54,17 @@ namespace MyCompanyApp
                 options.SlidingExpiration = true;
             });
 
+            // Set up authorization policy for Admin area
+            services.AddAuthorization(x =>
+            {
+                x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
+            });
+
             // Add controllers and views support (MVC)
-            services.AddControllersWithViews()
+            services.AddControllersWithViews(x =>
+            {
+                x.Conventions.Add(new AdminAreaAuthorization("Admin", "AdminArea"));
+            })
                 // Use compatibility with ASP.NET Core 3.0
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
         }
