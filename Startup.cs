@@ -83,6 +83,7 @@ namespace MyCompanyApp
             // Register routes we need (endpoints)
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("admin", "{areas:exists}/{Controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
