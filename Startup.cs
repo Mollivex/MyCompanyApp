@@ -72,6 +72,8 @@ namespace MyCompanyApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
             //!!! middleware registration order (is very important) !!! 
 
             // In development process we need to get detailed information about errors
@@ -92,7 +94,7 @@ namespace MyCompanyApp
             // Register routes we need (endpoints)
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("admin", "{areas:exists}/{Controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("admin", "{areas:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyCompanyApp.Models;
@@ -51,6 +52,14 @@ namespace MyCompanyApp.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [Route("Error/{statusCode}")]
+        public IActionResult Error(int statusCode)
+        {
+            var feature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
+
+            return View(new ErrorViewModel { StatusCode = statusCode, OriginalPath = feature?.OriginalPath });
         }
     }
 }

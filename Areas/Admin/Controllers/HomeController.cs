@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MyCompanyApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("AdminArea")]
     public class HomeController : Controller
     {
         public IActionResult Index()
