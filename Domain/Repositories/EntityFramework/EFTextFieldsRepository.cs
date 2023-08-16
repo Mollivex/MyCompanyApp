@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyCompanyApp.Domain.Entities;
-using MyCompanyApp.Domain.Repositories.Abstract;
-using System;
+﻿using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using MyCompany.Domain.Entities;
+using MyCompany.Domain.Repositories.Abstract;
 
-
-namespace MyCompanyApp.Domain.Repositories.EntityFramework
+namespace MyCompany.Domain.Repositories.EntityFramework
 {
     public class EFTextFieldsRepository : ITextFieldsRepository
     {
@@ -14,11 +13,13 @@ namespace MyCompanyApp.Domain.Repositories.EntityFramework
         {
             this.context = context;
         }
+
         public IQueryable<TextField> GetTextFields()
         {
             return context.TextFields;
         }
-        public TextField GetTextField(Guid id)
+
+        public TextField GetTextFieldById(Guid id)
         {
             return context.TextFields.FirstOrDefault(x => x.Id == id);
         }
@@ -27,6 +28,7 @@ namespace MyCompanyApp.Domain.Repositories.EntityFramework
         {
             return context.TextFields.FirstOrDefault(x => x.CodeWord == codeWord);
         }
+
         public void SaveTextField(TextField entity)
         {
             if (entity.Id == default)
@@ -35,9 +37,10 @@ namespace MyCompanyApp.Domain.Repositories.EntityFramework
                 context.Entry(entity).State = EntityState.Modified;
             context.SaveChanges();
         }
+
         public void DeleteTextField(Guid id)
         {
-            context.TextFields.Remove(new TextField { Id = id });
+            context.TextFields.Remove(new TextField() { Id = id });
             context.SaveChanges();
         }
     }

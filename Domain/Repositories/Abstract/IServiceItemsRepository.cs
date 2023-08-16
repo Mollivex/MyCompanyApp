@@ -1,17 +1,14 @@
-﻿using MyCompanyApp.Domain.Entities;
-using System;
+﻿using System;
 using System.Linq;
+using MyCompany.Domain.Entities;
 
-namespace MyCompanyApp.Domain.Repositories.Abstract
+namespace MyCompany.Domain.Repositories.Abstract
 {
     public interface IServiceItemsRepository
     {
-        public interface IServiceItemsRepository
-        {
-            IQueryable<ServiceItem> GetServiceItem();
-            ServiceItem GetServiceItemById(Guid id);
-            void SaveServiceItem(ServiceItem entity);
-            void DeleteServiceItem(Guid id);
-        }
+        IQueryable<ServiceItem> GetServiceItems();
+        ServiceItem GetServiceItemById(Guid id);
+        void SaveServiceItem(ServiceItem entity);
+        void DeleteServiceItem(Guid id);
     }
 }

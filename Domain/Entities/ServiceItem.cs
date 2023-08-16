@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyCompanyApp.Domain.Entities
+namespace MyCompany.Domain.Entities
 {
     public class ServiceItem : EntityBase
     {
-        [Required(ErrorMessage="Fill service name")]
-        [Display(Name = "Service name")]
+        [Required(ErrorMessage = "Заполните название услуги")]
+        [Display(Name = "Название услуги")]
         public override string Title { get; set; }
 
-        [Display(Name = "Service short description")]
+        [Display(Name = "Краткое описание услуги")]
         public override string Subtitle { get; set; }
 
-        [Display(Name = "Service full description")]
+        [Display(Name = "Полное описание услуги")]
         public override string Text { get; set; }
     }
 }

@@ -1,14 +1,15 @@
-﻿using MyCompanyApp.Domain.Repositories.Abstract;
+﻿using MyCompany.Domain.Repositories.Abstract;
 
-namespace MyCompanyApp.Domain
+namespace MyCompany.Domain
 {
     public class DataManager
     {
-        public ITextFieldsRepository TextFields {  get; set; }
+        public ITextFieldsRepository TextFields { get; set; }
         public IServiceItemsRepository ServiceItems { get; set; }
-        public DataManager (ITextFieldsRepository textFieldRepository, IServiceItemsRepository serviceItemsRepository)
+
+        public DataManager(ITextFieldsRepository textFieldsRepository, IServiceItemsRepository serviceItemsRepository)
         {
-            TextFields = textFieldRepository;
+            TextFields = textFieldsRepository;
             ServiceItems = serviceItemsRepository;
         }
     }

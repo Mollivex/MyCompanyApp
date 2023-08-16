@@ -1,18 +1,15 @@
-﻿using MyCompanyApp.Domain.Entities;
-using System;
+﻿using System;
 using System.Linq;
+using MyCompany.Domain.Entities;
 
-namespace MyCompanyApp.Domain.Repositories.Abstract
+namespace MyCompany.Domain.Repositories.Abstract
 {
     public interface ITextFieldsRepository
     {
-        public interface ITextFieldsRepository
-        {
-            IQueryable<TextField> GetTextFields();
-            TextField GetTextFieldById(Guid id);
-            TextField GetTextFieldByCodeWord(string codeWord);
-            void SaveTextField(TextField entity);
-            void DeleteTextField(Guid id);
-        }
+        IQueryable<TextField> GetTextFields();
+        TextField GetTextFieldById(Guid id);
+        TextField GetTextFieldByCodeWord(string codeWord);
+        void SaveTextField(TextField entity);
+        void DeleteTextField(Guid id);
     }
 }

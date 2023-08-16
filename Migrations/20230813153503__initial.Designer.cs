@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyCompanyApp.Domain;
+using MyCompany.Domain;
 
-namespace MyCompanyApp.Migrations
+namespace MyCompany.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20230813153503__initial")]
@@ -251,7 +251,7 @@ namespace MyCompanyApp.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MyCompanyApp.Domain.Entities.ServiceItem", b =>
+            modelBuilder.Entity("MyCompany.Domain.Entities.ServiceItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -287,7 +287,7 @@ namespace MyCompanyApp.Migrations
                     b.ToTable("ServiceItems");
                 });
 
-            modelBuilder.Entity("MyCompanyApp.Domain.Entities.TextField", b =>
+            modelBuilder.Entity("MyCompany.Domain.Entities.TextField", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

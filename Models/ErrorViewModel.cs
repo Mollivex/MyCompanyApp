@@ -1,4 +1,4 @@
-﻿namespace MyCompanyApp.Models
+﻿namespace MyCompany.Models
 {
     public class ErrorViewModel
     {

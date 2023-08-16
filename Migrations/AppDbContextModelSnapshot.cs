@@ -3,10 +3,9 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyCompanyApp.Domain;
+using MyCompany.Domain;
 
-namespace MyCompanyApp.Migrations
+namespace MyCompany.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -48,8 +47,8 @@ namespace MyCompanyApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "077f2d17-0151-4a4e-b2d5-6a74b4d05127",
-                            ConcurrencyStamp = "f37d1b4f-15c3-4c4a-84d2-ba91efb14763",
+                            Id = "44546e06-8719-4ad8-b88a-f271ae9d6eab",
+                            ConcurrencyStamp = "1c07fb23-ced7-48f9-bf0a-e0df233cd7a3",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -146,15 +145,15 @@ namespace MyCompanyApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "169e00d8-226e-447e-b32b-386471434c56",
+                            Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d0055b45-c352-4694-86f4-377ab1688606",
+                            ConcurrencyStamp = "091be5bf-9d58-40e6-98a8-e82859894571",
                             Email = "my@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJUpCwvTmT40Gx+wusWVEwgOmMUo7fo0ggXsyIpExKAQ0L4TyOS5KEqYgpGrA5y9QQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECBA6mt3xGNgyLjwyRhhtI3PI2IBKsm00Y3bAJfjdVrgT0++e45OV5Vh4SLTLPDHEQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -225,8 +224,8 @@ namespace MyCompanyApp.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "169e00d8-226e-447e-b32b-386471434c56",
-                            RoleId = "077f2d17-0151-4a4e-b2d5-6a74b4d05127"
+                            UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
+                            RoleId = "44546e06-8719-4ad8-b88a-f271ae9d6eab"
                         });
                 });
 
@@ -249,7 +248,7 @@ namespace MyCompanyApp.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MyCompanyApp.Domain.Entities.ServiceItem", b =>
+            modelBuilder.Entity("MyCompany.Domain.Entities.ServiceItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,7 +284,7 @@ namespace MyCompanyApp.Migrations
                     b.ToTable("ServiceItems");
                 });
 
-            modelBuilder.Entity("MyCompanyApp.Domain.Entities.TextField", b =>
+            modelBuilder.Entity("MyCompany.Domain.Entities.TextField", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -326,27 +325,27 @@ namespace MyCompanyApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e8a35e6e-2ec6-472d-b09d-7861c02daab1"),
+                            Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),
                             CodeWord = "PageIndex",
-                            DateAdded = new DateTime(2023, 8, 13, 15, 35, 2, 844, DateTimeKind.Utc).AddTicks(7928),
-                            Text = "Content edit by administrator",
-                            Title = "Main page"
+                            DateAdded = new DateTime(2020, 2, 8, 6, 13, 50, 96, DateTimeKind.Utc).AddTicks(9537),
+                            Text = "Содержание заполняется администратором",
+                            Title = "Главная"
                         },
                         new
                         {
-                            Id = new Guid("15627982-3663-481d-9ba1-a91757b92bd3"),
+                            Id = new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"),
                             CodeWord = "PageServices",
-                            DateAdded = new DateTime(2023, 8, 13, 15, 35, 2, 844, DateTimeKind.Utc).AddTicks(9345),
-                            Text = "Content edit by administrator",
-                            Title = "Our Services"
+                            DateAdded = new DateTime(2020, 2, 8, 6, 13, 50, 97, DateTimeKind.Utc).AddTicks(2218),
+                            Text = "Содержание заполняется администратором",
+                            Title = "Наши услуги"
                         },
                         new
                         {
-                            Id = new Guid("1a9012e6-a71f-4faa-ae8a-34ecf1e2f14d"),
+                            Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                             CodeWord = "PageContacts",
-                            DateAdded = new DateTime(2023, 8, 13, 15, 35, 2, 844, DateTimeKind.Utc).AddTicks(9408),
-                            Text = "Content edit by administrator",
-                            Title = "Contacts"
+                            DateAdded = new DateTime(2020, 2, 8, 6, 13, 50, 97, DateTimeKind.Utc).AddTicks(2284),
+                            Text = "Содержание заполняется администратором",
+                            Title = "Контакты"
                         });
                 });
 

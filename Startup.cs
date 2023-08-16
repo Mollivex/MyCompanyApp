@@ -1,39 +1,37 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MyCompanyApp.Domain;
-using MyCompanyApp.Domain.Repositories.Abstract;
-using MyCompanyApp.Domain.Repositories.EntityFramework;
-using MyCompanyApp.Service;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.AspNetCore.Identity;
-using System;
+using MyCompany.Domain;
+using MyCompany.Domain.Repositories.Abstract;
+using MyCompany.Domain.Repositories.EntityFramework;
+using MyCompany.Service;
 
-namespace MyCompanyApp
+namespace MyCompany
 {
     public class Startup
     {
-        public IConfigurationRoot Configuration { get; }
-        public Startup(IConfiguration configuration) => Configuration = (IConfigurationRoot)configuration;
+        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
+
         public void ConfigureServices(IServiceCollection services)
         {
-            // Config.cs connecting from appsettings.json
+            //подключаем конфиг из appsetting.json
             Configuration.Bind("Project", new Config());
 
-            // Connect app functionality we need as services
+            //подключаем нужный функционал приложения в качестве сервисов
             services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>();
             services.AddTransient<IServiceItemsRepository, EFServiceItemsRepository>();
             services.AddTransient<DataManager>();
 
-            // Connect database context
+            //подключаем контекст БД
             services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
 
-            // Set up identity system
+            //настраиваем identity систему
             services.AddIdentity<IdentityUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
@@ -44,7 +42,7 @@ namespace MyCompanyApp
                 opts.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
-            // Set up authentication cookie
+            //настраиваем authentication cookie
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "myCompanyAuth";
@@ -54,47 +52,44 @@ namespace MyCompanyApp
                 options.SlidingExpiration = true;
             });
 
-            // Set up authorization policy for Admin area
+            //настраиваем политику авторизации для Admin area
             services.AddAuthorization(x =>
             {
                 x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
             });
 
-            // Add controllers and views support (MVC)
+            //добавляем сервисы для контроллеров и представлений (MVC)
             services.AddControllersWithViews(x =>
-            {
-                x.Conventions.Add(new AdminAreaAuthorization("Admin", "AdminArea"));
-            })
-                // Use compatibility with ASP.NET Core 3.0
+                {
+                    x.Conventions.Add(new AdminAreaAuthorization("Admin", "AdminArea"));
+                })
+                //выставляем совместимость с asp.net core 3.0
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseStatusCodePagesWithReExecute("/Error/{0}");
+            //!!! порядок регистрации middleware очень важен
 
-            //!!! middleware registration order (is very important) !!! 
-
-            // In development process we need to get detailed information about errors
+            //в процессе разработки нам важно видеть какие именно ошибки
             if (env.IsDevelopment()) 
                 app.UseDeveloperExceptionPage();
 
-            // Application static files support connection(css, js, etc.)
+            //подключаем поддержку статичных файлов в приложении (css, js и т.д.)
             app.UseStaticFiles();
 
-            // Connect routing system
+            //подключаем систему маршрутизации
             app.UseRouting();
 
-            // Connect authentication and authorization
+            //подключаем аутентификацию и авторизацию
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Register routes we need (endpoints)
+            //регистриуруем нужные нам маршруты (ендпоинты)
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("admin", "{areas:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("admin", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }

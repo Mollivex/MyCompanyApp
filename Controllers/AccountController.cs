@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MyCompanyApp.Models;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
+using MyCompany.Models;
 
-namespace MyCompanyApp.Controllers
+namespace MyCompany.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -15,8 +13,8 @@ namespace MyCompanyApp.Controllers
         private readonly SignInManager<IdentityUser> signInManager;
         public AccountController(UserManager<IdentityUser> userMgr, SignInManager<IdentityUser> signinMgr)
         {
-            this.userManager = userMgr;
-            this.signInManager = signinMgr;
+            userManager = userMgr;
+            signInManager = signinMgr;
         }
 
         [AllowAnonymous]
@@ -25,7 +23,6 @@ namespace MyCompanyApp.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(new LoginViewModel());
         }
-
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
@@ -42,7 +39,7 @@ namespace MyCompanyApp.Controllers
                         return Redirect(returnUrl ?? "/");
                     }
                 }
-                ModelState.AddModelError(nameof(LoginViewModel.UserName), "Wrong login or password!");
+                ModelState.AddModelError(nameof(LoginViewModel.UserName), "Неверный логин или пароль");
             }
             return View(model);
         }
@@ -52,14 +49,6 @@ namespace MyCompanyApp.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
-        }
-
-        [Route("Error/{statusCode}")]
-        public IActionResult Error(int statusCode)
-        {
-            var feature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
-
-            return View(new ErrorViewModel { StatusCode = statusCode, OriginalPath = feature?.OriginalPath });
         }
     }
 }
